@@ -6,8 +6,29 @@ const ta = document.querySelector('#ta');
 const bt = document.querySelector('#btn1');
 const timeE1 = document.getElementById('time');
 const dateE1 = document.getElementById('date');
-const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-const Months = ['Jan', 'Feb', 'Mar', 'Apr', 'May','Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const days = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+];
+const Months = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
 
 setInterval(() => {
   const time = new Date();
@@ -16,17 +37,22 @@ setInterval(() => {
   const date = time.getDate();
   const day = time.getDay();
   const hour = time.getHours();
-  const hoursIn12Hourformat = hour >= 12 ? hour %12 : hour
+  const hoursIn12Hourformat = hour >= 12 ? hour % 12 : hour;
   const minutes = time.getMinutes();
   const seconds = time.getSeconds();
-  const ampm = hour >= 12 ? 'PM' : 'AM'
-  
+  const ampm = hour >= 12 ? 'PM' : 'AM';
 
-  timeE1.innerHTML = (hoursIn12Hourformat < 10? '0' + hoursIn12Hourformat : hoursIn12Hourformat) + ':' + (minutes < 10 ? '0' + minutes : minutes) + ' ' + `<span id="am-pm">${ampm}</span>`
+  timeE1.innerHTML =
+    (hoursIn12Hourformat < 10
+      ? '0' + hoursIn12Hourformat
+      : hoursIn12Hourformat) +
+    ':' +
+    (minutes < 10 ? '0' + minutes : minutes) +
+    ' ' +
+    `<span id="am-pm">${ampm}</span>`;
 
   dateE1.innerHTML = days[day] + ', ' + date + ' ' + Months[month];
-
-},10);
+}, 10);
 
 bt.addEventListener('click', () => {
   const xhr = new XMLHttpRequest(); // AJAX 요청
@@ -34,14 +60,14 @@ bt.addEventListener('click', () => {
     // console.log('readyState=', xhr.readyState);
     if (xhr.readyState == 4) {
       var ret = JSON.parse(xhr.responseText);
-      console.log(ret);
+      // console.log(ret);
       // ta.value = JSON.stringify(makeResponse(ret));
       makeResponse(ret);
     } // 응답 완료 시 텍스트 출력
   };
   xhr.open(
     'GET',
-    'http://localhost:3000/proxy' + '?nx=' + nx.value + '&ny=' + ny.value,
+    'http://localhost:3000/proxy' + '?city=' + search.value,
     true // 비동기 요청
   );
   xhr.send();
@@ -128,7 +154,6 @@ function makeResponse(ret, callback) {
     });
     const respData = await resp.json();
 
-
     const weather = document.createElement('div');
     weather.classList.add('weather');
 
@@ -146,7 +171,6 @@ function makeResponse(ret, callback) {
     main.innerHTML = '';
     main.appendChild(weather);
   }
-
   bt.addEventListener('click', (e) => {
     e.preventDefault();
 

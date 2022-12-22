@@ -30,18 +30,18 @@ const Months = [
   'Dec',
 ];
 
-setInterval(() => {
-  const time = new Date();
-  const fullYear = time.getFullYear();
-  const month = time.getMonth();
-  const date = time.getDate();
-  const day = time.getDay();
-  const hour = time.getHours();
-  const hoursIn12Hourformat = hour >= 12 ? hour % 12 : hour;
-  const minutes = time.getMinutes();
-  const seconds = time.getSeconds();
-  const ampm = hour >= 12 ? 'PM' : 'AM';
+const time = new Date();
+const fullYear = time.getFullYear();
+const month = time.getMonth();
+const date = time.getDate();
+const day = time.getDay();
+const hour = time.getHours();
+const hoursIn12Hourformat = hour >= 12 ? hour % 12 : hour;
+const minutes = time.getMinutes();
+const seconds = time.getSeconds();
+const ampm = hour >= 12 ? 'PM' : 'AM';
 
+setInterval(() => {
   timeE1.innerHTML =
     (hoursIn12Hourformat < 10
       ? '0' + hoursIn12Hourformat
@@ -88,6 +88,8 @@ function makeResponse(ret, callback) {
     else if (it.category == 'VEC') vec = it.fcstValue; // 풍향
     else if (it.category == 'WSD') wsd = it.fcstValue; // 풍속
   });
+
+  console.log(ret);
 
   //하늘상태, 습도, 온도, 풍속, 강수량, 낙뢰만 표시
 
@@ -139,7 +141,7 @@ function makeResponse(ret, callback) {
     lightning: lgt,
   };
 
-  const apiKey = '34e87189c543424b52d1a164aa7c7c26';
+  const apiKey = '';
 
   const main = document.getElementById('main');
   const form = document.getElementById('form');
@@ -166,14 +168,12 @@ function makeResponse(ret, callback) {
             <small>${lgt}</small>
             
             `;
-
+    console.log(respData.weather[0].icon);
     //   cleanup
     main.innerHTML = '';
     main.appendChild(weather);
   }
-  bt.addEventListener('click', (e) => {
-    e.preventDefault();
-
+  bt.addEventListener('click', () => {
     const city = search.value;
 
     if (city) {

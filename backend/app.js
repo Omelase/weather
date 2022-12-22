@@ -22,7 +22,7 @@ app.get('/proxy', (req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
   res.set('Content-Type', 'application/json; charset=UTF-8');
 
-  const apiKey = '34e87189c543424b52d1a164aa7c7c26';
+  const apiKey = '';
   const city = req.query.city;
   const geocode = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`;
 
@@ -31,7 +31,9 @@ app.get('/proxy', (req, res) => {
     const lat = JSON.parse(body)[0]['lat']; // deserialize하여 객체로 변환해 추출
     const lon = JSON.parse(body)[0]['lon'];
 
-    const rs = dfs_xy_conv('toXY', lat, lon); // 위도,경도를 x,y좌표로 변환
+    const rs = dfs_xy_conv('toXY', lat, lon); // 위도,경도를 x,y좌표로 변환 (객체형태로 )
+
+    console.log(rs);
 
     // var rs = dfs_xy_conv('toXY', req.query.nx, req.query.ny);
     const nx = rs.nx;
@@ -69,8 +71,7 @@ app.get('/proxy', (req, res) => {
       dd = '0' + dd;
     }
 
-    const api_key =
-      'O1UV%2F2uPlcdCj4cUaAuks17N6Nj0CTeU3GT0osfKD3n3iyWZPzwe9BeMBDnGWWVkH%2FG6nu%2FYHdtZTvK%2FPi3eGQ%3D%3D';
+    const api_key = '';
     const base_date = yyyy + '' + mm + '' + dd;
     const base_time = hours + '00';
 
@@ -90,11 +91,11 @@ app.get('/proxy', (req, res) => {
       '&ny=' +
       ny;
 
-    // console.log(today);
-    // console.log(base_date);
-    // console.log(base_time);
-    // console.log(today.getDate() - 1);
-    // console.log(dd);
+    console.log(today);
+    console.log(base_date);
+    console.log(base_time);
+    console.log(today.getDate() - 1);
+    console.log(dd);
 
     // app
     //   .get(openApiUrl, (req) => {
@@ -119,7 +120,7 @@ app.get('/proxy', (req, res) => {
       res.send(body);
     });
     // var apikey =
-    //     'O1UV%2F2uPlcdCj4cUaAuks17N6Nj0CTeU3GT0osfKD3n3iyWZPzwe9BeMBDnGWWVkH%2FG6nu%2FYHdtZTvK%2FPi3eGQ%3D%3D',
+    //     '',
     //   ttoday = yyyy + '' + mm + '' + dd,
     //   basetime = hours + '00',
     //   fileName =
@@ -165,7 +166,7 @@ var SLAT2 = 60.0; // 투영 위도2(degree)
 var OLON = 126.0; // 기준점 경도(degree)
 var OLAT = 38.0; // 기준점 위도(degree)
 var XO = 43; // 기준점 X좌표(GRID)
-var YO = 136; // 기1준점 Y좌표(GRID)
+var YO = 136; // 기준점 Y좌표(GRID)
 //
 // LCC DFS 좌표변환 ( code : "toXY"(위경도->좌표, v1:위도, v2:경도), "toLL"(좌표->위경도,v1:x, v2:y) )
 //
@@ -223,4 +224,3 @@ function dfs_xy_conv(code, v1, v2) {
   }
   return rs;
 }
-// dfs_xy_conv
